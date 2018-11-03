@@ -1,0 +1,16 @@
+.search-form__btn{
+    @extend %button;
+    width: 60px;
+    outline: 0px;
+}
+.search-load-more__btn{
+    @extend %button;
+    width: 130px;
+    outline: 0px;
+    display: none;
+}
+
+.page.show-btn .search-load-more__btn {
+    display: block;
+    margin: 0 auto 50px;
+}
