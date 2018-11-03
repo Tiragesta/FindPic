@@ -1,0 +1,15 @@
+.is-active {
+    text-align: center;
+    margin-top: 0;
+    order: 1;
+}
+.is-click {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    cursor: pointer;
+}
+.site-favorite{
+    order: 2;
+}
