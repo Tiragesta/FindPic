@@ -1,15 +1,30 @@
-.is-active {
+.is-active{
     text-align: center;
-    margin-top: 0;
-    order: 1;
+    margin-top: 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    @media(min-width: 768px){
+        justify-content: flex-end;
+}
+
+    @media(min-width: 1024px){
+        flex-direction: row;
+        justify-content: flex-end;
+    }
 }
 .is-click {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    flex-wrap: wrap;
     cursor: pointer;
+    order: 1;
+    
 }
 .site-favorite{
     order: 2;
+
+    @media (min-width: 1024px) {
+        margin-left: 200px; 
+        margin-top: 0px; 
+        order: 2;     
+    }
 }
