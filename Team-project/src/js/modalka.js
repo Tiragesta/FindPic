@@ -14,18 +14,28 @@ const refsModal = {
   grid: document.querySelector('.search-answer'),
   pageHeader: document.querySelector('.page-header'),
   siteLogo: document.querySelector('.site-logo'),
+  popUp: document.querySelector('.pop-up')
 };
 
 
-const popUpClose = () => refsModal.page.classList.remove('pop-up_active');
+function popUpClose(e) {
+  if (e.target == refsModal.popUp || e.target == refsModal.close) {
+    refsModal.page.classList.remove('pop-up_active');
+  }
+}
 
 function popUpOpen(event) {
   const ls = Array.from(document.querySelectorAll(".search-answer > div > img"));
-
-  let targetId = ls.indexOf(event.target);
-
+  const nodeName = event.target.nodeName;
+  let targetId;
+  if (nodeName === 'DIV') {
+    targetId = ls.indexOf(event.target.firstChild);
+  } else if (nodeName === 'IMG') {
+    targetId = ls.indexOf(event.target);
+  }
   const targetImg = ls[targetId];
   const popupImageSrc = refsModal.img;
+  if(targetImg === undefined) return;
   popupImageSrc.src = targetImg.src;
 
   function popUpNext() {
@@ -61,26 +71,23 @@ function popUpOpen(event) {
   refsModal.prev.addEventListener('click', popUpPrev);
 }
 
-
 refsModal.list.addEventListener('click', popUpOpen,true);
 refsModal.close.addEventListener('click', popUpClose);
+refsModal.popUp.addEventListener('click', popUpClose);
 refsModal.list.addEventListener('click', handleBtnClick,true);
 // ================================
-  const array = [];
-  function handleBtnClick(evt) {
-    evt.preventDefault();
+const array = [];
+function handleBtnClick(evt) {
+  evt.preventDefault();
 
-    const value = evt.target.src ;
-    array.push(value);
-
+  const value = evt.target.src ;
+  array.push(value);
 }
-
 
 refsModal.favorite.addEventListener('click', handleFavoriteBtnClick);
 refsModal.select.addEventListener('click',  handleSelectBtnClick);
 
 function handleSelectBtnClick() {
-  console.log(array);
   localStorage.setItem('images', JSON.stringify(array));
 }
 
@@ -93,13 +100,13 @@ function handleFavoriteBtnClick() {
   refsModal.siteLogo.classList.remove('site-logo');
   refsModal.siteLogo.classList.add('is-click');
 
-   const header = `<h2 class="site-favorite__link">Избранное</h2>`;
-   refsModal.grid.insertAdjacentHTML('beforeend',header);
-const arrayImg = JSON.parse(localStorage.getItem('images'));
-const elem = arrayImg.reduce((markup, img) => markup + `<div class="search-answer__image"><img src="${img}" alt="">
+  const header = `<h2 class="site-favorite__link">Избранное</h2>`;
+  refsModal.grid.insertAdjacentHTML('beforeend',header);
+  const arrayImg = JSON.parse(localStorage.getItem('images'));
+  const elem = arrayImg.reduce((markup, img) => markup + `<div class="search-answer__image"><img src="${img}" alt="">
 <button class="btn_remove"></button></div>`,
-'',);
-refsModal.grid.insertAdjacentHTML('beforeend',elem);
+    '',);
+  refsModal.grid.insertAdjacentHTML('beforeend',elem);
 }
 
 refsModal.list.addEventListener('click',  handleDeleteImage);
@@ -110,17 +117,14 @@ function handleDeleteImage(event){
   if(nodeName === 'BUTTON'){
     const parent = event.target.parentNode;
     parent.remove();
-};
+  }
 
-removeFromLocalStorage();
+  removeFromLocalStorage();
 
 }
 function removeFromLocalStorage(id){
   const imgArr = JSON.parse(localStorage.getItem('images'));
-const imgToDelete = imgArr.filter(el => el.url === id)[0];
-imgArr.splice(imgArr.indexOf(imgToDelete), 1);
-localStorage.setItem('images', JSON.stringify(imgArr));
+  const imgToDelete = imgArr.filter(el => el.url === id)[0];
+  imgArr.splice(imgArr.indexOf(imgToDelete), 1);
+  localStorage.setItem('images', JSON.stringify(imgArr));
 }
-
-
-

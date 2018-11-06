@@ -8,13 +8,10 @@ const refs = {
     siteLogo: document.querySelector('.site-logo'),
     mainPage: document.querySelector('.site-logo__link'),
   };
-  
-  console.log("refs.form: ", refs.form);
+
   let currentPage = 1;
   let currentQuery = '';
-// https://pixabay.com/api/?key=10502586-9b5f28e8ed93518550ea5da27&q=dog
 
-// 10502586-9b5f28e8ed93518550ea5da27
 refs.form.addEventListener('submit', handleFormSubmit);
 refs.loadMoreBtn.addEventListener('click', handleLoadMoreBtnClick);
 

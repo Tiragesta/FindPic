@@ -499,6 +499,10 @@ template {
   margin-right: 15px;
 }
 
+.search-answer__image:hover {
+  cursor: pointer;
+}
+
 .search-answer__image img {
   max-width: 100%;
   height: 100%;
@@ -516,9 +520,10 @@ template {
   transition: -webkit-transform .2s linear;
   transition: transform .2s linear;
   transition: transform .2s linear, -webkit-transform .2s linear;
+  cursor: pointer;
 }
 
-.search-answer:hover .btn_remove {
+.search-answer__image:hover .btn_remove {
   visibility: visible;
 }
 
@@ -629,22 +634,26 @@ body:not(.pop-up_active) .pop-up__img {
   margin-right: 10px;
   width: 8px;
   outline: 0;
+  cursor: pointer;
 }
 
 .btn_next {
   background-image: url("../images/next.png");
   width: 8px;
   outline: 0;
+  cursor: pointer;
 }
 
 .btn_select {
   background-image: url("../images/star.png");
   outline: 0;
+  cursor: pointer;
 }
 
 .btn_close {
   background-image: url("../images/close.png");
   outline: 0;
+  cursor: pointer;
 }
 
 @media (min-width: 768px) {
