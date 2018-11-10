@@ -1,5 +1,6 @@
 const refs = {
     form: document.querySelector('.form'),
+    loadMore: document.querySelector('.search-load-more'),
     loadMoreBtn: document.querySelector('.search-load-more__btn'),
     input: document.querySelector('.search-form__input'),
     grid: document.querySelector('.search-answer'),
@@ -14,7 +15,6 @@ const refs = {
 
 refs.form.addEventListener('submit', handleFormSubmit);
 refs.loadMoreBtn.addEventListener('click', handleLoadMoreBtnClick);
-
 
 //======================================================================
 
@@ -40,10 +40,8 @@ function imagesRequest(query, page = 1) {
     return axios.get(url)
 
      .then(response => response.data.hits)
-
-      .catch(function (error) {
+     .catch(function (error) {
         console.log(error);
-
     });
 }
 
@@ -53,7 +51,6 @@ function createGridItems(items) {
     markup + `<div class="search-answer__image"><img src="${item.webformatURL}" alt=""></div>`,
     '',
   );
-
 }
 
 function handleLoadMoreBtnClick() {
@@ -63,16 +60,24 @@ function handleLoadMoreBtnClick() {
 }
 
 function loadPhotos() {
-
   imagesRequest(currentQuery, currentPage).then(photos => {
     const markup = createGridItems(photos);
     refs.grid.insertAdjacentHTML('beforeend', markup);
     refs.page.classList.add('show-btn');
   });
-
 }
 
 //=================================================
+function loadMainPage() {
+  refs.grid.innerHTML = '';
+  refs.page.classList.remove('show-btn');
+  refsModal.pageHeader.classList.remove('is-active');
+  refsModal.pageHeader.classList.add('page-header');
+  refsModal.siteLogo.classList.remove('is-click');
+  refsModal.siteLogo.classList.add('site-logo');
+}
 refs.mainPage.addEventListener('click', loadMainPage);
 
-const loadMainPage = () => refsModal.page.classList.remove('search-answer');
+//refs.mainPage.addEventListener('click', loadMainPage);
+
+//const loadMainPage = () => refsModal.page.classList.remove('search-answer');

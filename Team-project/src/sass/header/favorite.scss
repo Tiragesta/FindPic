@@ -4,14 +4,10 @@
     text-align: right;
     transform: scaleX(1.0002);
     margin-top: 34px;
-    order: 2;
 
     &__link {
       color: $primary-violet-color;
       text-decoration: none;
-    }
-    @media(min-width: 1024px){
-        order: 1;
     }
 }
 .site-favorite:before{

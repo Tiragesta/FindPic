@@ -8,8 +8,9 @@
 
 
 /*header*/
+@import 'header/header.scss';
 @import 'header/favorite.scss';
-@import 'header/logo.scss';
+//@import 'header/logo.scss';
 
 /*main*/
 @import 'main/main-container.scss';

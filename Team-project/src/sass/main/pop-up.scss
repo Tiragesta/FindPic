@@ -23,6 +23,16 @@
   width: 55%;
   height: 70%;
   position: relative;
+
+  @media(max-width: 767px ){
+    width: 280px;
+    height: 44%;
+  }
+
+  @media(min-width: 768px ){
+    width: 640px;
+    height: 390px;
+}
 }
 
 body:not(.pop-up_active) .pop-up__img {
@@ -97,4 +107,41 @@ body:not(.pop-up_active) .pop-up__img {
   background-image: url("../images/close.png");
   outline: 0;
   cursor: pointer;
+}
+
+.add-to-fav {
+  display: none;
+
+  &__active {
+    display: block;
+    padding: 10px;
+    background: #ffffffb3;
+    position: absolute;
+    border: 2px solid $primary-violet-color;
+    border-radius: 22px;
+    font-family: 'Roboto', sans-serif;
+    color: $primary-violet-color;
+    font-weight: 700;
+    text-align: center;
+
+    @media(min-width: 320px) {
+      width: 200px;
+      top: 30%;
+      left: 10%;
+      right: 10%;
+    }
+
+    @media only screen and (min-width: 768px) and (max-width: 1023px) {
+      width: 200px;
+      top: 40%;
+      left: 35%;
+      right: 35%;
+    }
+
+    @media(min-width: 1024px) {
+      top: 48%;
+      left: 38%;
+      right: 38%;
+    }
+  }
 }
