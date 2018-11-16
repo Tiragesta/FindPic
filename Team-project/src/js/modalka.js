@@ -19,6 +19,8 @@ const refsModal = {
   favoriteTitle: document.querySelector('.favorite-title')
 };
 
+let imgCount = 0;
+
 
 function popUpClose(e) {
   if (e.target == refsModal.popUp || e.target == refsModal.close) {
@@ -95,6 +97,8 @@ function handleSelectBtnClick() {
     refsModal.addToFav.classList.add('add-to-fav');
   }
 const timerId = setTimeout(popUpSelectBtnClick, 1000);
+imgCount = imgCount + 1;
+return imgCount;
 }
 
 function handleFavoriteBtnClick() {
@@ -104,12 +108,13 @@ function handleFavoriteBtnClick() {
   refsModal.pageHeader.classList.remove('page-header');
   refsModal.pageHeader.classList.add('is-active');
   refsModal.siteLogo.classList.remove('site-logo');
+  refsModal.select.classList.add('hidden');
   refsModal.siteLogo.classList.add('is-click');
 
+  const arrayImg = JSON.parse(localStorage.getItem('images'));
   const header = `<h2 class="site-favorite__link">Избранное</h2><br />`;
   refsModal.favoriteTitle.insertAdjacentHTML('beforeend', header);
 
-  const arrayImg = JSON.parse(localStorage.getItem('images'));
   const elem = arrayImg.reduce((markup, img) => markup + `<div class="search-answer__image"><img src="${img}" alt="">
 <button class="btn_remove"></button></div>`,
     '',);
@@ -129,7 +134,10 @@ function handleDeleteImage(event){
 
     const targetToDel = parent.firstChild.src;
     removeFromLocalStorage(targetToDel);
+    imgCount = imgCount - 1;
+    handleFavoriteBtnClick();
   }
+  return imgCount;
 }
 
 function removeFromLocalStorage(url){

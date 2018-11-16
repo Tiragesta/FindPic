@@ -9,7 +9,9 @@ var refs = {
   page: document.querySelector('.page'),
   pageHeader: document.querySelector('.page-header'),
   siteLogo: document.querySelector('.site-logo'),
-  mainPage: document.querySelector('.site-logo__link')
+  mainPage: document.querySelector('.site-logo__link'),
+  favoriteTitle: document.querySelector('.favorite-title'),
+  imgPerPage: 12
 };
 var currentPage = 1;
 var currentQuery = '';
@@ -20,10 +22,12 @@ function handleFormSubmit(evt) {
   evt.preventDefault();
   currentQuery = refs.input.value;
   if (currentQuery === '') return;
+  refsModal.favoriteTitle.innerHTML = '';
   refs.pageHeader.classList.remove('page-header');
   refs.pageHeader.classList.add('is-active');
   refs.siteLogo.classList.remove('site-logo');
   refs.siteLogo.classList.add('is-click');
+  refsModal.select.classList.remove('hidden');
   currentPage = 1;
   refs.grid.innerHTML = '';
   loadPhotos();
@@ -34,7 +38,7 @@ function imagesRequest(query) {
   var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
   var url = "https://pixabay.com/api/?key=10502586-9b5f28e8ed93518550ea5da27&q=".concat(query, "&per_page=12&page=").concat(page);
   return axios.get(url).then(function (response) {
-    return response.data.hits;
+    return response.data;
   }).catch(function (error) {
     console.log(error);
   });
@@ -52,8 +56,20 @@ function handleLoadMoreBtnClick() {
 }
 
 function loadPhotos() {
-  imagesRequest(currentQuery, currentPage).then(function (photos) {
-    var markup = createGridItems(photos);
+  imagesRequest(currentQuery, currentPage).then(function (data) {
+    var total = data.totalHits;
+    var counter = data.hits;
+    var totalPages = Math.ceil(total / refs.imgPerPage);
+
+    if (currentPage === totalPages) {
+      refs.loadMoreBtn.textContent = "Все картинки показаны";
+      refs.loadMoreBtn.disabled = true;
+    } else if (currentPage !== totalPages) {
+      refs.loadMoreBtn.disabled = false;
+      refs.loadMoreBtn.textContent = "Показать еще";
+    }
+
+    var markup = createGridItems(counter);
     refs.grid.insertAdjacentHTML('beforeend', markup);
     refs.page.classList.add('show-btn');
   });
@@ -61,12 +77,14 @@ function loadPhotos() {
 
 
 function loadMainPage() {
+  refsModal.favoriteTitle.innerHTML = '';
   refs.grid.innerHTML = '';
   refs.page.classList.remove('show-btn');
   refsModal.pageHeader.classList.remove('is-active');
   refsModal.pageHeader.classList.add('page-header');
   refsModal.siteLogo.classList.remove('is-click');
   refsModal.siteLogo.classList.add('site-logo');
+  refsModal.select.classList.remove('hidden');
 }
 
 refs.mainPage.addEventListener('click', loadMainPage); //refs.mainPage.addEventListener('click', loadMainPage);
@@ -93,6 +111,7 @@ var refsModal = {
   addToFav: document.querySelector('.add-to-fav'),
   favoriteTitle: document.querySelector('.favorite-title')
 };
+var imgCount = 0;
 
 function popUpClose(e) {
   if (e.target == refsModal.popUp || e.target == refsModal.close) {
@@ -173,6 +192,8 @@ function handleSelectBtnClick() {
   }
 
   var timerId = setTimeout(popUpSelectBtnClick, 1000);
+  imgCount = imgCount + 1;
+  return imgCount;
 }
 
 function handleFavoriteBtnClick() {
@@ -182,10 +203,11 @@ function handleFavoriteBtnClick() {
   refsModal.pageHeader.classList.remove('page-header');
   refsModal.pageHeader.classList.add('is-active');
   refsModal.siteLogo.classList.remove('site-logo');
+  refsModal.select.classList.add('hidden');
   refsModal.siteLogo.classList.add('is-click');
+  var arrayImg = JSON.parse(localStorage.getItem('images'));
   var header = "<h2 class=\"site-favorite__link\">\u0418\u0437\u0431\u0440\u0430\u043D\u043D\u043E\u0435</h2><br />";
   refsModal.favoriteTitle.insertAdjacentHTML('beforeend', header);
-  var arrayImg = JSON.parse(localStorage.getItem('images'));
   var elem = arrayImg.reduce(function (markup, img) {
     return markup + "<div class=\"search-answer__image\"><img src=\"".concat(img, "\" alt=\"\">\n<button class=\"btn_remove\"></button></div>");
   }, '');
@@ -202,7 +224,11 @@ function handleDeleteImage(event) {
     parent.remove();
     var targetToDel = parent.firstChild.src;
     removeFromLocalStorage(targetToDel);
+    imgCount = imgCount - 1;
+    handleFavoriteBtnClick();
   }
+
+  return imgCount;
 }
 
 function removeFromLocalStorage(url) {

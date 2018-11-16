@@ -1,5 +1,7 @@
 
 .page-header {
+  display: flex;
+  flex-direction: column;
 
     .site-favorite{
       font-family: 'Roboto', sans-serif;
@@ -55,13 +57,16 @@
       display: flex;
       flex-direction: column-reverse;
       box-sizing: border-box;
-      padding-top: 34px;
+      padding-top: 32px;
     }
   
     @media(min-width: 1024px) {
       display: flex;
       flex-direction: column-reverse;
       box-sizing: border-box;
-      padding-top: 34px;
+      padding-top: 32px;
     }
   }
+.header {
+  padding-bottom: 48px;
+}

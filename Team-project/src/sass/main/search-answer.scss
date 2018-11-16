@@ -1,15 +1,14 @@
 .search-answer{
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-evenly;
   flex-wrap: wrap;
   margin-bottom: 30px;
   box-sizing: border-box;
   padding: 0 22px;
 
-  @media(max-width: 1023px) {
-    display: flex;
-    flex-direction: column;
+  @media(min-width: 1023px) {
+    flex-direction: row;
   }
 }
 
@@ -31,12 +30,7 @@
   @media(min-width: 1024px){
     width: 209px;
     height: 122px;
-
-    &:not(:nth-child(4n)) {
-      margin-right: 15px;
-    }
   }
-
 
   &:hover {
     cursor: pointer;
@@ -53,10 +47,10 @@
 }
 
 .btn_remove{
-  width: 10px;
-  height: 10px;
+  width: 20px;
+  height: 20px;
   position: absolute;
-  background: transparent url(../images/close.png);
+  background: $primary-violet-color url(../images/close.png) no-repeat center center;;
   outline: 0;
   border: 0;
   border-radius: 5px;
@@ -85,6 +79,9 @@
   &:hover:after {
     display: block;
   }
+  @media only screen and (min-width: 320px) and (max-width: 1023px) {
+    visibility: visible;
+}
 }
 
 .search-answer:hover .btn_remove {

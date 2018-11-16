@@ -1,12 +1,29 @@
 .is-active {
     display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-  padding-top: 32px;
+    flex-direction: column;
+    padding-top: 32px;
     order: 1;
 
+    @media(min-width: 1024px) {
+      flex-direction: row;
+      justify-content: flex-end;
+      padding-top: 32px;
+  }
+
+  img {
+    display: block;
+    margin: 0 auto;
+  }
+
   .site-favorite {
+    margin: 0 auto;
+    padding-top: 34px;
     width: 110px;
+
+    @media(min-width: 1024px) {
+      margin: 0;
+      padding: 0;
+    }
 
     &__link {
       font-family: 'Roboto', sans-serif;
@@ -28,8 +45,11 @@
   }
 }
 .is-click {
-    margin-right: 200px;
     cursor: pointer;
+
+    @media(min-width: 1024px) {
+      margin-right: 200px;
+}
 }
 .site-favorite {
     order: 2;

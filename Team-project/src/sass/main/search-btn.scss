@@ -2,15 +2,30 @@
     @extend %button;
     width: 60px;
     outline: 0px;
+
+    &:hover {
+        border: 2px solid $button-border-color;
+    }
+}
+.search-load-more {
+    padding-bottom: 50px;
 }
 .search-load-more__btn{
     @extend %button;
-    width: 130px;
+    min-width: 130px;
     outline: 0px;
     display: none;
 }
 
 .page.show-btn .search-load-more__btn {
     display: block;
-    margin: 0 auto 50px;
+    margin: 0 auto;
+
+    &:hover {
+        border: 2px solid $button-border-color;
+    }
 }
+.page.show-btn .search-load-more__btn[disabled] {
+    background-color: $button-border-color;
+    color: $primary-violet-color;
+  }
